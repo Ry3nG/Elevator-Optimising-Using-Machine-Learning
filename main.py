@@ -1,1 +1,1 @@
-print("brain.exe has stopped working")
+print("brain.exe has started working")
