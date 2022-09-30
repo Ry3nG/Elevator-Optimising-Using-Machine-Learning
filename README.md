@@ -13,3 +13,14 @@ Aim: Develop an algorithm to control TRADITIONAL ELEVATOR based on Machine Learn
 TODOs
 * Decide on a Machine Learning Algorithm
 * Decide on what parameters we should consider.
+
+Flow of events
+1. Separating the dataset to train and test
+2. EDA: histograms, box plots on floors
+3. EDA: Time distribution by hour, day, week, if possible (generate time series)
+4. 
+
+
+## Model
+* Prediction problem: predict where the elevator is gonna stop
+* Consider factors like: work calendar, weather (raining then less people using elevator)
