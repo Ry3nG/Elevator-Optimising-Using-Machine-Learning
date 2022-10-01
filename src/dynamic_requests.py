@@ -1,9 +1,11 @@
 """
-Dont use this i just randomly pice code together
+Why did we join the hackathon??
 """
 
 
 import random
+
+from RequestsGenerator import RequestGenerator
 
 SIZE = 20
 HEIGHT = 20
@@ -28,41 +30,7 @@ def get_closest_requests_in_direction(reqs, head, is_going_up):
     return next_request
 
 
-def SSTF_v2(reqs, head):
-    reqs_copy = reqs.copy()
-    overall_distance = 0
-    seek_sequence = [head]
-
-    print("\nShortest Seek Time First :3\n")
-    print(f"Head\t\t\t: {head}")
-
-    while reqs_copy:
-        # Get next closest request
-        next_request = min(reqs_copy, key=lambda x: abs(x - head))
-        reqs_copy.remove(next_request)
-        seek_sequence.append(next_request)
-
-        # Calculate distance to travel to next request
-        distance = abs(head - next_request)
-        overall_distance += distance
-        head = next_request
-
-        # Add some subsequent requests to simulate elevator calls since not all elevator calls are simultaneous
-        if random.randint(0, 4) == 1:
-            request_length = random.randint(1, 4)
-            reqs.append("\b,")
-            for _ in range(request_length):
-                new_request = random.randint(0, HEIGHT)
-                reqs.append(new_request)
-                reqs_copy.append(new_request)
-
-    print(f"Requests\t\t: {' '.join([str(i) for i in reqs])}")
-    print(f"Total distance travelled: {overall_distance}")
-    print(f"Seek sequence\t\t: {' -> '.join([str(i) for i in seek_sequence])}")
-    print("\n")
-
-
-def SCAN_v2(reqs, head):
+"""def SCAN_v2(reqs, head):
     reqs_copy = reqs.copy()
     overall_distance = 0
     seek_sequence = [head]
@@ -104,11 +72,57 @@ def SCAN_v2(reqs, head):
     print(f"Requests\t\t: {' '.join([str(i) for i in reqs])}")
     print(f"Total distance travelled: {overall_distance}")
     print(f"Seek sequence\t\t: {' -> '.join([str(i) for i in seek_sequence])}")
+    print("\n")"""
+
+def SCAN_v3(r: RequestGenerator, head):
+    overall_distance = 0
+    seek_sequence = [head]
+
+    reqs = r.requests.copy()
+
+    print("\nSCAN :3\n")
+    print(f"Head\t\t\t: {head}")
+
+    i = 0
+
+    is_going_up = True
+
+    # Get next closest request to determine whether the elevator is going up or down
+    while r.requests or r.tick < 287:
+        # Get next closest request in the direction of the elevator
+        if not r.requests:
+            r.next_tick()
+            continue
+
+        next_request = get_closest_requests_in_direction(r.requests, head, is_going_up)
+        while next_request is None:
+            is_going_up = not is_going_up
+            next_request = get_closest_requests_in_direction(
+                r.requests, head, is_going_up
+            )
+
+        r.requests.remove(next_request)
+        seek_sequence.append(next_request)
+
+        # Calculate distance to travel to next request
+        distance = abs(head - next_request)
+        overall_distance += distance
+        head = next_request
+
+        # Add more requests every 4 iter
+        i += 1
+        if i % 4 == 0:
+            i = 0
+            r.next_tick()
+
+    print(f"Requests\t\t: {' '.join([str(i) for i in reqs])}")
+    print(f"Total distance travelled: {overall_distance}")
+    print(f"Seek sequence\t\t: {' -> '.join([str(i) for i in seek_sequence])}")
     print("\n")
 
 
 if __name__ == "__main__":
     reqs = [random.randint(1, HEIGHT) for _ in range(SIZE)]
     head = random.randint(1, HEIGHT)
-    SSTF_v2(reqs, head)
-    # SCAN_v2(reqs, head)
+    r = RequestGenerator()
+    SCAN_v3(r, 1)

@@ -114,7 +114,7 @@ if __name__ == "__main__":
     r = RG()
 
     def algo(r, head):
-        while r has requests and day is not over yet:
+        while r has requests or day is not over yet:
             seek_sequence = []
 
             serve_next_few_requests()  # maybe 3 - 5??
