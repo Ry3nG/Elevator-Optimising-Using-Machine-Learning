@@ -1,30 +1,33 @@
 # FCFS Disk Scheduling Algorithm
 # This code is contributed by Rajput-Ji, GeeksforGeeks
-size = 8
+
+import random
+
+SIZE = 10
+HEIGHT = 100
 
 
-def FCFS(arr, head):
-    seek_count = 0
-    distance, cur_track = 0, 0
+def FCFS(reqs, head):
+    overall_distance = 0
+    seek_sequence = [head]
 
-    for i in range(size):
-        cur_track = arr[i]
-        # CALCULATE THE ABSOLUTE DISTANCE
-        distance = abs(cur_track - head)
-        # INCREASE THE SEEK COUNT
-        seek_count += distance
-        # CURRENT TRACK IS NOW THE NEW HEAD
-        head = cur_track
+    print("\nFirst Come First Serve :3\n")
+    print(f"Requests\t\t: {' '.join([str(i) for i in reqs])}")
+    print(f"Head\t\t\t: {head}")
 
-    print("Total number of seek operations = ", seek_count)
-    print("Seek Sequence is")
+    for req in reqs:
+        next_request = req
+        seek_sequence.append(req)
+        distance = abs(next_request - head)
+        overall_distance += distance
+        head = next_request
 
-    # SEEK SEQUENCE IS THE ARRAY
-    for i in range(size):
-        print(arr[i])
+    print(f"Total distance travelled: {overall_distance}")
+    print(f"Seek sequence\t\t: {' -> '.join([str(i) for i in seek_sequence])}")
+    print("\n")
 
 
 if __name__ == "__main__":
-    arr = [176, 79, 34, 60, 92, 11, 41, 114]
-    head = 50
-    FCFS(arr, head)
+    reqs = [random.randint(1, HEIGHT) for _ in range(SIZE)]
+    head = random.randint(1, HEIGHT)
+    FCFS(reqs, head)
