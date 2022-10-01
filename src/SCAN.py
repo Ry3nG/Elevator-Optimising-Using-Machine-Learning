@@ -67,4 +67,4 @@ def SCAN(reqs, head):
 if __name__ == "__main__":
     reqs = [random.randint(1, HEIGHT) for _ in range(SIZE)]
     head = random.randint(1, HEIGHT)
-    SCAN(reqs, head)  # Assuming the lift is going up
+    SCAN(reqs, head)

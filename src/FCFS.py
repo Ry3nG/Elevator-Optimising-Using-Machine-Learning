@@ -1,5 +1,7 @@
-# FCFS Disk Scheduling Algorithm
-# This code is contributed by Rajput-Ji, GeeksforGeeks
+"""
+Implementation of First Come First Serve (FCFS) algorithm :3
+This code is based on code by Rajput-Ji, GeeksforGeeks
+"""
 
 import random
 
