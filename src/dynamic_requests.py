@@ -1,6 +1,5 @@
 """
-Implementation of SCAN algorithm :3
-wut does SCAN stands for?
+Dont use this i just randomly pice code together
 """
 
 
