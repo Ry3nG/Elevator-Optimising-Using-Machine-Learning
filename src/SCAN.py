@@ -45,8 +45,8 @@ def SCAN(reqs, head):
     for _ in range(len(reqs_copy)):
         # Get next closest request in the direction of the elevator
         next_request = get_closest_requests_in_direction(reqs_copy, head, is_going_up)
-        if next_request is None:
-            is_going_up = False
+        while next_request is None:
+            is_going_up = not is_going_up
             next_request = get_closest_requests_in_direction(
                 reqs_copy, head, is_going_up
             )
