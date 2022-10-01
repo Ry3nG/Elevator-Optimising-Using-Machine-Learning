@@ -13,10 +13,15 @@ def SSTF(reqs, head):
     overall_distance = 0
     seek_sequence = [head]
 
+    print("\nShortest Seek Time First :3\n")
+    print(f"Requests\t\t: {' '.join([str(i) for i in reqs])}")
+    print(f"Head\t\t\t: {head}")
+
     for _ in range(len(reqs_copy)):
         # Get next closest request
         next_request = min(reqs_copy, key=lambda x: abs(x - head))
         reqs_copy.remove(next_request)
+        print(next_request)
         seek_sequence.append(next_request)
 
         # Calculate distance to travel to next request
@@ -24,10 +29,8 @@ def SSTF(reqs, head):
         overall_distance += distance
         head = next_request
 
-    print("\nShortest Seek Time First :3\n")
-    print(f"Requests\t\t: {' '.join([str(i) for i in reqs])}")
-    print(f"Head\t\t\t: {head}")
     print(f"Total distance travelled: {overall_distance}")
+    print(seek_sequence)
     print(f"Seek sequence\t\t: {' -> '.join([str(i) for i in seek_sequence])}")
     print("\n")
 
