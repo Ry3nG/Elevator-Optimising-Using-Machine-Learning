@@ -55,20 +55,28 @@ class RequestGenerator:
         if business == 0:
             for _ in range(2):
                 if random.randint(1, 100) < non_busy_period_busy_floors_percentage:
-                    self.requests.append(random.sample(self.busy_floors, 1)[0])
+                    new_req = random.sample(self.busy_floors, 1)[0]
+                    self.requests.append(new_req)
+                    yield new_req
                 else:
-                    self.requests.append(random.sample(self.non_busy_floor, 1)[0])
+                    new_req = random.sample(self.non_busy_floor, 1)[0]
+                    self.requests.append(new_req)
+                    yield new_req
         elif business == 1:
             for _ in range(2):
                 if random.randint(1, 100) < busy_period_busy_floors_percentage:
-                    self.requests.append(random.sample(self.busy_floors, 1)[0])
+                    new_req = random.sample(self.busy_floors, 1)[0]
+                    self.requests.append(new_req)
+                    yield new_req
                 else:
-                    self.requests.append(random.sample(self.non_busy_floor, 1)[0])
+                    new_req = random.sample(self.non_busy_floor, 1)[0]
+                    self.requests.append(new_req)
+                    yield new_req
         elif business == 2:
             for _ in range(2):
-                self.requests.append(
-                    random.sample(self.busy_floors + self.non_busy_floor, 1)[0]
-                )
+                new_req = random.sample(self.non_busy_floor + self.busy_floors, 1)[0]
+                self.requests.append(new_req)
+                yield new_req
 
     def create_next_requests(self):
         """Create more requests, requests come in pair"""
@@ -84,8 +92,17 @@ class RequestGenerator:
             )  # very low chance of call
 
         self._new_req = frequency_of_requests
+
+        # Print info
+        print(f"Tick {self.tick}")
+
+        new_reqs = []
         for _ in range(frequency_of_requests):
-            self._create_next_requests_util()
+            new_reqs = [x for x in self._create_next_requests_util()]
+            print(f"New requests: {' '.join([str(x) for x in new_reqs])}")
+        
+        if new_reqs:
+            print(f"Current requests: {self.requests}\n")
 
         self.tick += 1
         self.time_series_index = self.tick // 6
@@ -98,11 +115,6 @@ class RequestGenerator:
 
 if __name__ == "__main__":
     reqs = RequestGenerator()
-    # for i in range(288):
-    #     reqs.next_tick()
-    #     # print(a.time_series[a.time_series_index], i // 12, a._new_req, len(a.requests))
-    #     if i % 3 == 0:
-    #         print(f"{i // 12} o'clock\t, new requests: {reqs._new_req}")
 
     """
     Requests list is reqs.requests

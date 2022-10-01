@@ -1,5 +1,6 @@
 """
 Why did we join the hackathon??
+FML 
 """
 
 
@@ -30,7 +31,65 @@ def get_closest_requests_in_direction(reqs, head, is_going_up):
     return next_request
 
 
-"""def SCAN_v2(reqs, head):
+def SCAN_v3(r: RequestGenerator, head):
+    overall_distance = 0
+    seek_sequence = [head]
+
+    reqs = r.requests.copy()
+
+    print("\nSCAN :3\n")
+    print(f"Head\t\t\t: {head}")
+
+    i = 0
+
+    is_going_up = True
+
+    # Get next closest request to determine whether the elevator is going up or down
+    while r.requests or r.tick < 287:
+        # Get next closest request in the direction of the elevator
+        if not r.requests:
+            r.next_tick()
+            continue
+
+        next_request = get_closest_requests_in_direction(r.requests, head, is_going_up)
+        while next_request is None:
+            is_going_up = not is_going_up
+            next_request = get_closest_requests_in_direction(
+                r.requests, head, is_going_up
+            )
+
+        r.requests = [x for x in r.requests if x != next_request]
+        seek_sequence.append(next_request)
+
+        # Calculate distance to travel to next request
+        distance = abs(head - next_request)
+        overall_distance += distance
+        head = next_request
+
+        # Add more requests every 4 iter
+        i += 1
+        if i % 4 == 0:
+            i = 0
+            r.next_tick()
+            print(
+                f"Seek sequence\t\t: {' -> '.join([str(i) for i in seek_sequence])}\n"
+            )
+
+    print(f"Requests\t\t: {' '.join([str(i) for i in reqs])}")
+    print(f"Total distance travelled: {overall_distance}")
+    print(f"Seek sequence\t\t: {' -> '.join([str(i) for i in seek_sequence])}")
+    print("\n")
+
+
+if __name__ == "__main__":
+    reqs = [random.randint(1, HEIGHT) for _ in range(SIZE)]
+    head = random.randint(1, HEIGHT)
+    r = RequestGenerator()
+    SCAN_v3(r, 1)
+
+"""
+Don't mind this move along
+def SCAN_v2(reqs, head):
     reqs_copy = reqs.copy()
     overall_distance = 0
     seek_sequence = [head]
@@ -73,56 +132,3 @@ def get_closest_requests_in_direction(reqs, head, is_going_up):
     print(f"Total distance travelled: {overall_distance}")
     print(f"Seek sequence\t\t: {' -> '.join([str(i) for i in seek_sequence])}")
     print("\n")"""
-
-def SCAN_v3(r: RequestGenerator, head):
-    overall_distance = 0
-    seek_sequence = [head]
-
-    reqs = r.requests.copy()
-
-    print("\nSCAN :3\n")
-    print(f"Head\t\t\t: {head}")
-
-    i = 0
-
-    is_going_up = True
-
-    # Get next closest request to determine whether the elevator is going up or down
-    while r.requests or r.tick < 287:
-        # Get next closest request in the direction of the elevator
-        if not r.requests:
-            r.next_tick()
-            continue
-
-        next_request = get_closest_requests_in_direction(r.requests, head, is_going_up)
-        while next_request is None:
-            is_going_up = not is_going_up
-            next_request = get_closest_requests_in_direction(
-                r.requests, head, is_going_up
-            )
-
-        r.requests.remove(next_request)
-        seek_sequence.append(next_request)
-
-        # Calculate distance to travel to next request
-        distance = abs(head - next_request)
-        overall_distance += distance
-        head = next_request
-
-        # Add more requests every 4 iter
-        i += 1
-        if i % 4 == 0:
-            i = 0
-            r.next_tick()
-
-    print(f"Requests\t\t: {' '.join([str(i) for i in reqs])}")
-    print(f"Total distance travelled: {overall_distance}")
-    print(f"Seek sequence\t\t: {' -> '.join([str(i) for i in seek_sequence])}")
-    print("\n")
-
-
-if __name__ == "__main__":
-    reqs = [random.randint(1, HEIGHT) for _ in range(SIZE)]
-    head = random.randint(1, HEIGHT)
-    r = RequestGenerator()
-    SCAN_v3(r, 1)
