@@ -19,42 +19,35 @@ Our algorithm should use data processing and ML techniques to transform these ra
 
 With these subproblems answered, one would be in a good place to improve the elevator's scheduling algorithm. And that is our ultimate goal. Unnfortunitely, due to limited time in this 3-day Hackerthon,we don't have enough time and resources to keep fine-tuning a machine learning-based elevator scheduling algorithm to beat traditional elevator algorithms.
 
+## 3. Exploratory Data Analysis
+The dataset is collected from 4 different elevators in an office building in New York City. The original raw data is as follows
+![raw data](assets/raw%20data.png)
+Through forward-search and backward-search in the time-series, we observe the action taken by the elevator, i.e. door opening and closing, to determine user in-and-out. Then, cross-referencing with system time, we could transform the raw data to something like this.
+![processed data](assets/processed%20data.png)
+
+## Subproblem 1: Is wait time related to time of the day?
+![Subproblem 1](assets/subproblem1.png)
+
+## Subproblem 2: Is wait time related to which floor user is on?
+![Subproblem 2](assets/subproblem2.png)
+
+## Subproblem 3: What factor affects wait time the most?
+To answer this question, we use Light-GBM model with RandomSearchCV for hyperparameter tuning.
+The best estimator across all searched parameters are:
+>LGBMClassifier(lambda_l1=1, lambda_l2=1, min_data_in_leaf=50, num_leaves=127,reg_alpha=0.1)
+
+The output of feature importance is as follows:
+![Subproblem 3](assets/Subproblem3.png)
 
 
+## Future Exploration and Development Directions
+We aim to improve elevator operation efficieny using Machine Learning Algorithms.
 
+The idea is to build a prediction model that calculates the likelyhood of requests in every time instant. To do that, we created an elevator class to simulate a single elevator environment. We also built a random-request generator that would create realistic requests for the elevator. The generator will consider the trends we discovered from EDA.
 
+Our goal is to implement the algorithm and compare it with the SCAN Disk distribution algorithm which is commonly used for elevator services. 
 
+The comparison will be of 2 aspects: user experience(wait time), and elevator wear(determined by distance moved)
+However, due to limited time and resources in this 3-day Hackathon, we didn't managed to fine tune the model.
 
-
-
-
-
-
-
-
-
-# Archived(will be deleted once finished)
--------------------------------------------
-## Existing Algorithms for Elevator Control
-1. FCFS: First Come First Serve
-2. SSTF: Shortest Seek Time First
-3. SCAN: 
-   
-## Development
-Aim: Develop an algorithm to control TRADITIONAL ELEVATOR based on Machine Learning to beat SSTF and SCAN.
-> Traditional Elevator: one elevator, no group control
-
-TODOs
-* Decide on a Machine Learning Algorithm
-* Decide on what parameters we should consider.
-
-Flow of events
-1. Separating the dataset to train and test
-2. EDA: histograms, box plots on floors
-3. EDA: Time distribution by hour, day, week, if possible (generate time series)
-4. 
-
-
-## Model
-* Prediction problem: predict where the elevator is gonna stop
-* Consider factors like: work calendar, weather (raining then less people using elevator)
+It will be of our future research direction for this project.
