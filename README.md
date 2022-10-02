@@ -1,6 +1,29 @@
 # Elevator-Optimising-Using-Machine-Learning
 Project developed for NTU DeepLearning Hackathon
 
+## 1. Problem Statement and Aim
+Today, more and more IoT devices are already changing every aspect of life, and elevators as an important part of life are no exception. For example, KONE uses the Watson IoT Platform running on IBM Cloud to collect streams of incoming data about movement, vibration, loading, and other information.
+
+However, we've noticed that despite more and more elevator companies are concerned about how their elevators actually perform, not all of their products are running with IoT devices embedded. 
+
+Therefore, we want to provide a solution that can be retrofitted to any existing elevator and provide companies with a range of data about user experience and elevator performance through data processing and Machine Learning.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Archived(will be deleted once finished)
+-------------------------------------------
 ## Existing Algorithms for Elevator Control
 1. FCFS: First Come First Serve
 2. SSTF: Shortest Seek Time First
