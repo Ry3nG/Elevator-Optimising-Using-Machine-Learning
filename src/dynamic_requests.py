@@ -44,11 +44,21 @@ def SCAN_v3(r: RequestGenerator, head):
 
     is_going_up = True
 
-    # Get next closest request to determine whether the elevator is going up or down
     while r.requests or r.tick < 287:
-        # Get next closest request in the direction of the elevator
+        # If no requests are avaiable go to next tick
         if not r.requests:
-            r.next_tick()
+            new_reqs = [x for x in r.next_tick()]
+
+            # Print info
+            print(f"Tick {r.tick}")
+            
+            if new_reqs:
+                print(f"New requests: {' '.join([str(x) for x in new_reqs])}")
+                print(f"Current requests: {r.requests}\n")
+
+            print(
+                f"Seek sequence\t\t: {' -> '.join([str(i) for i in seek_sequence])}\n"
+            )
             continue
 
         next_request = get_closest_requests_in_direction(r.requests, head, is_going_up)
@@ -70,7 +80,15 @@ def SCAN_v3(r: RequestGenerator, head):
         i += 1
         if i % 4 == 0:
             i = 0
-            r.next_tick()
+            new_reqs = [x for x in r.next_tick()]
+
+            # Print info
+            print(f"Tick {r.tick}")
+            
+            if new_reqs:
+                print(f"New requests: {' '.join([str(x) for x in new_reqs])}")
+                print(f"Current requests: {r.requests}\n")
+
             print(
                 f"Seek sequence\t\t: {' -> '.join([str(i) for i in seek_sequence])}\n"
             )
@@ -86,49 +104,3 @@ if __name__ == "__main__":
     head = random.randint(1, HEIGHT)
     r = RequestGenerator()
     SCAN_v3(r, 1)
-
-"""
-Don't mind this move along
-def SCAN_v2(reqs, head):
-    reqs_copy = reqs.copy()
-    overall_distance = 0
-    seek_sequence = [head]
-
-    print("\nSCAN :3\n")
-    # print(f"Requests\t\t: {' '.join([str(i) for i in reqs])}")
-    print(f"Head\t\t\t: {head}")
-
-    # Get next closest request to determine whether the elevator is going up or down
-    next_request = min(reqs_copy, key=lambda x: abs(x - head))
-    is_going_up = head < next_request
-
-    while reqs_copy:
-        # Get next closest request in the direction of the elevator
-        next_request = get_closest_requests_in_direction(reqs_copy, head, is_going_up)
-        while next_request is None:
-            is_going_up = not is_going_up
-            next_request = get_closest_requests_in_direction(
-                reqs_copy, head, is_going_up
-            )
-
-        reqs_copy.remove(next_request)
-        seek_sequence.append(next_request)
-
-        # Calculate distance to travel to next request
-        distance = abs(head - next_request)
-        overall_distance += distance
-        head = next_request
-
-        # Add some subsequent requests to simulate elevator calls since not all elevator calls are simultaneous
-        if random.randint(0, 4) == 1:
-            request_length = random.randint(1, 4)
-            reqs.append("\b,")
-            for _ in range(request_length):
-                new_request = random.randint(0, HEIGHT)
-                reqs.append(new_request)
-                reqs_copy.append(new_request)
-
-    print(f"Requests\t\t: {' '.join([str(i) for i in reqs])}")
-    print(f"Total distance travelled: {overall_distance}")
-    print(f"Seek sequence\t\t: {' -> '.join([str(i) for i in seek_sequence])}")
-    print("\n")"""

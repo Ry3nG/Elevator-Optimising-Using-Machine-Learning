@@ -94,23 +94,27 @@ class RequestGenerator:
         self._new_req = frequency_of_requests
 
         # Print info
-        print(f"Tick {self.tick}")
+        # print(f"Tick {self.tick}")
 
         new_reqs = []
         for _ in range(frequency_of_requests):
-            new_reqs = [x for x in self._create_next_requests_util()]
-            print(f"New requests: {' '.join([str(x) for x in new_reqs])}")
+            yield from self._create_next_requests_util()
+            # new_reqs = [x for x in self._create_next_requests_util()]
+            # for x in new_reqs:
+            #     yield x
+
+            # print(f"New requests: {' '.join([str(x) for x in new_reqs])}")
         
-        if new_reqs:
-            print(f"Current requests: {self.requests}\n")
+        # if new_reqs:
+        #     print(f"Current requests: {self.requests}\n")
 
         self.tick += 1
         self.time_series_index = self.tick // 6
 
     def next_tick(self):
         if self.tick >= 288:
-            return
-        self.create_next_requests()
+            return None
+        yield from self.create_next_requests()
 
 
 if __name__ == "__main__":
