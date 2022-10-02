@@ -4,12 +4,12 @@ Project developed for NTU DeepLearning Hackathon
 ## 1. Problem Statement and Aim
 Today, more and more IoT devices are already changing every aspect of life, and elevators as an important part of life are no exception. For example, KONE uses the Watson IoT Platform running on IBM Cloud to collect streams of incoming data about movement, vibration, loading, and other information.
 
-However, we've noticed that despite more and more elevator companies are concerned about how their elevators actually perform, not all of their products are running with IoT devices embedded. 
+However, we've noticed that despite more and more elevator companies are only concerned about how their elevator's functionality, not all of their products are running with IoT devices embedded. 
 
 Therefore, we want to provide a solution that can be retrofitted to any existing elevator and provide companies with a range of data about user experience and elevator performance through data processing and Machine Learning.
 
 ## 2. Problem Elaboration
-Every modern elevator will record these information during its runtime: Action (door open, door close), direction(up, down, idle), current floor, etc.. These raw data simply record the status of the elevator, they record every event, but they do not reflect on how well the elevator actually performs. 
+Every modern elevator will record these information during its runtime: Action (door open, door close), direction(up, down, idle), current floor, etc.. These raw data simply record the status of the elevator, they record every event, but they are not used for otimizing the elevator performance. 
 
 Our algorithm should use data processing and ML techniques to transform these raw data into something that's related to user experience. For example, wait time. We've drawn 3 sub-problems from this demand:
 
