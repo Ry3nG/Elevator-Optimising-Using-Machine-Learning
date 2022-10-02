@@ -4,7 +4,7 @@ Project developed for NTU DeepLearning Hackathon
 ## 1. Problem Statement and Aim
 Today, more and more IoT devices are already changing every aspect of life, and elevators as an important part of life are no exception. For example, KONE uses the Watson IoT Platform running on IBM Cloud to collect streams of incoming data about movement, vibration, loading, and other information.
 
-However, we've noticed that despite more and more elevator companies are only concerned about how their elevator's functionality, not all of their products are running with IoT devices embedded. 
+However, we've noticed that despite more and more elevator companies concerned about how their elevator's functionality, not all of their products are running with IoT devices embedded. 
 
 Therefore, we want to provide a solution that can be retrofitted to any existing elevator and provide companies with a range of data about user experience and elevator performance through data processing and Machine Learning.
 
