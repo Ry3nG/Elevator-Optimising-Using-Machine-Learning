@@ -9,7 +9,7 @@ import random
 from RequestsGenerator import RequestGenerator
 
 SIZE = 20
-HEIGHT = 20
+HEIGHT = 10
 
 
 def get_closest_requests_in_direction(reqs, head, is_going_up):
@@ -102,5 +102,5 @@ def SCAN_v3(r: RequestGenerator, head):
 if __name__ == "__main__":
     reqs = [random.randint(1, HEIGHT) for _ in range(SIZE)]
     head = random.randint(1, HEIGHT)
-    r = RequestGenerator()
+    r = RequestGenerator(floor_count=HEIGHT, busy_floors=[2, 5, 6, 10])
     SCAN_v3(r, 1)
